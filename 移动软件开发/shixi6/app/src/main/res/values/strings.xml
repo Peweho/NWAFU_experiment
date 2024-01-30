@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">shixi6</string>
+    <string name="name">姓名：</string>
+    <string name="classes">班级：</string>
+    <string name="sid">学号：</string>
+    <string name="id">ID：</string>
+    <string name="clearAll">清除显示</string>
+    <string name="addDate">添加数据</string>
+    <string name="showAll">全部显示</string>
+    <string name="delAll">全部删除</string>
+    <string name="delById">ID删除</string>
+    <string name="updateByID">ID更新</string>
+    <string name="selectById">ID查询</string>
+</resources>
