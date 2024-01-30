@@ -1,0 +1,10 @@
+int function()
+{
+    int k ,a;
+    a = 10;
+    k = 30;
+    while(k<10)
+    {
+        a = a * 2;
+    }
+}

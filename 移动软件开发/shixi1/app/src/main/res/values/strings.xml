@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">shixi1</string>
-    <string-array name="options_array">
-        <item>树皮</item>
-        <item>树叶</item>
-        <item>整树</item>
-    </string-array>
-</resources>

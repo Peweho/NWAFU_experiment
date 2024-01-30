@@ -1,0 +1,357 @@
+options {
+  STATIC = false; // 是否生成静态解析器
+}
+
+// 定义语法规则
+PARSER_BEGIN(Semantics)
+package Semantics;
+
+import util.*;
+public class Semantics {
+        public QTList qtList = new QTList();
+        public void printQTTable(){
+            qtList.printQTTable();
+        }
+        public static void main(String[] args) throws ParseException {
+
+        FileInputStream in = new FileInputStream("./src/testFile/test1/test.txt");
+        Semantics parser = new Semantics(in);
+        try
+        {
+          SimpleNode n = parser.Start();
+          System.out.println("语法树：");
+          n.dump("=");
+          System.out.println("四元式：");
+          parser.printQTTable();
+          System.out.println("Thank you.");
+        }
+        catch (Exception e)
+        {
+          System.out.println("Oops.");
+          System.out.println(e.getMessage());
+        }
+  }
+}
+
+
+PARSER_END(Semantics)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| < "//" (~[ "\n", "\r" ])*
+    (
+      "\n"
+    | "\r"
+    | "\r\n"
+    ) >
+| < "/*" (~[ "*" ])* "*"
+    (
+      ~[ "/" ] (~[ "*" ])* "*"
+    )*
+    "/" >
+}
+
+TOKEN : /* LITERALS */
+{
+  < INTEGER_LITERAL :
+    < DECIMAL_LITERAL > ([ "l", "L" ])?
+  | < HEX_LITERAL > ([ "l", "L" ])?
+  | < OCTAL_LITERAL > ([ "l", "L" ])?
+    >
+| < #DECIMAL_LITERAL : [ "1"-"9" ] ([ "0"-"9" ])* >
+| < #HEX_LITERAL : "0" [ "x", "X" ] ([ "0"-"9", "a"-"f", "A"-"F" ])+ >
+| < #OCTAL_LITERAL : "0" ([ "0"-"7" ])* >
+}
+
+TOKEN : /*KEYWORDS*/
+{
+  < IF : "if" > |
+  < ELSE : "else" > |
+  < INT : "int" > |
+  < RETURN : "return" > |
+  < DO : "do" > |
+  < WHILE : "while" > |
+  < STRUCT : "struct" > |
+  < VOID : "void" > |
+  < DOUBLE : "double"> |
+  < MAIN : "main">
+}
+
+TOKEN : /*operators*/
+{
+  < ADD : "+" > |
+  < MUL : "*" > |
+  < SUB : "-" > |
+  < DIV : "/" >
+}
+
+TOKEN : /*operators*/
+{
+  < RELATION_OPERATORS :  < GREAT> |
+                           < LESS > |
+                           < EQUAL > > |
+  < #GREAT : ">" > |
+  < #LESS : "<" > |
+  < #EQUAL : "==" >
+}
+
+TOKEN : /*separators*/
+{
+  < COMMA : "," > |
+  < SEMI : ";" > |
+  < SLBRACKET : "(" > |
+  < SRBRACKET : ")" > |
+  < MLBRACKET : "[" > |
+  < MRBRACKET : "]" > |
+  < LLBRACKET : "{" > |
+  < LRBRACKET : "}" >
+}
+
+TOKEN : /* IDENTIFIERS */
+{
+  < IDENTIFIER :
+    < LETTER >
+    (
+      < LETTER >
+    | < DIGIT >
+    )* >
+| < #LETTER : [ "_", "a"-"z", "A"-"Z" ] >
+| < #DIGIT : [ "0"-"9" ] >
+}
+
+
+SimpleNode Start() :
+{}
+{
+  Program()
+  {
+    return jjtThis;
+  }
+}
+
+void Program() :
+{}
+{
+    Type() "main" "(" ")" "{" (SentenceBlock())* "}"
+}
+void SentenceBlock():
+{}
+{
+    Sentence() |
+    "{" (SentenceBlock())* "}"
+}
+
+void Sentence() :
+{}
+{
+    SequenceSentence() |
+    ConditionSentence() |
+    LoopSentence()
+}
+
+void SequenceSentence():
+{}
+{
+    (StatementSentence() |
+     AssignmentSentence() ) ";"
+}
+
+void StatementSentence() :
+{}
+{
+    Type() Identifier()  ("," Identifier())*
+}
+
+void Type() :
+{}
+{
+    <INT> |
+    <DOUBLE> |
+    <VOID>
+}
+
+void AssignmentSentence():
+{
+    String arg1 = null;
+    String result = null;
+}
+{
+    result = Identifier()
+    "="
+    arg1 = Expression()
+{
+    QTInfo qtInfo = new  QTInfo("=",arg1,"_",result);
+    qtList.addQTInfo(qtInfo);
+}
+}
+
+void ConditionSentence():
+{ConditionValue cValue = new ConditionValue();
+int index = 0;}
+{
+    <IF> "(" cValue = Condition() ")"
+    {
+        cValue.backpatchTrueChain(QTInfo.size + 1);
+    }
+    SentenceBlock()
+    {
+        cValue.backpatchFalseChain(QTInfo.size+1);
+    }
+    (
+        LOOKAHEAD(1)
+        <ELSE>
+        {
+            QTInfo qtInfo = new QTInfo("j","_","_","");
+            qtList.addQTInfo(qtInfo);
+            index = QTInfo.size;
+            cValue.backpatchFalseChain(QTInfo.size+1);
+        }
+        SentenceBlock()
+        {
+           QTInfo qtinfo = qtList.get(index-1);
+           qtinfo.setResult(QTInfo.size+1);
+        }
+    )?
+}
+
+ConditionValue Condition():
+{Token op = null;
+String e1 = null;
+String e2 = null;
+ConditionValue cValue = new ConditionValue();}
+{
+    e1 = Expression() (op =  <RELATION_OPERATORS> e2 = Expression())?
+    {
+    if (op == null) {
+        QTInfo qtInfo = new QTInfo("jnz",e1,"_","T");
+        qtList.addQTInfo(qtInfo);
+        cValue.mergeTrue(qtInfo);
+
+    }else{
+        QTInfo qtInfo = new QTInfo("j".concat(op.image),e1,e2,"T");
+        qtList.addQTInfo(qtInfo);
+        cValue.mergeTrue(qtInfo);
+    }
+
+    QTInfo qtInfo1 = new QTInfo("j","_","_","F");
+    qtList.addQTInfo(qtInfo1);
+    cValue.mergeFalse(qtInfo1);
+}
+    {
+        return cValue;
+    }
+}
+
+void LoopSentence():
+{ConditionValue cValue = new ConditionValue();
+int index = 0;}
+{
+    "while" "("
+    {
+        index = QTInfo.size;
+    }
+    cValue = Condition() ")"
+    {
+        cValue.backpatchTrueChain(QTInfo.size + 1);
+    }
+    SentenceBlock()
+    {
+       QTInfo qtInfo = new QTInfo("j","_","_",index);
+       qtList.addQTInfo(qtInfo);
+       cValue.backpatchFalseChain(QTInfo.size + 1);
+    }
+}
+
+
+String Expression() :
+{String s = null;}
+{
+  s = AdditiveExpression()
+  {return s;}
+}
+
+String AdditiveExpression() :
+{String arg1 = null;
+ String arg2 = null;
+ String T1 = null;
+ Token arg0 = null;}
+{
+  arg1 = MultiplicativeExpression()
+  {T1 = arg1;}
+  (
+    (
+     arg0 =  "+"
+    | arg0 =  "-"
+    )
+   arg2 =  MultiplicativeExpression()
+   {
+         T1 = VariableNameGenerator.genVariableName();
+         QTInfo qtInfo = new  QTInfo(arg0.image,arg1,arg2,T1);
+         qtList.addQTInfo(qtInfo);
+         arg1 = T1;
+       }
+  )*
+  {
+      return T1;
+     }
+}
+
+String MultiplicativeExpression() :
+{String arg1 = null;
+String arg2 = null;
+String T1 = null;
+Token arg0 = null;}
+{
+  arg1 = UnaryExpression()
+  {T1 = arg1;}
+  (
+    (
+     arg0 =  "*"
+    | arg0 =  "/"
+    | arg0 =  "%"
+    )
+    arg2 = UnaryExpression()
+    {
+        T1 = VariableNameGenerator.genVariableName();
+        QTInfo qtInfo = new  QTInfo(arg0.image,arg1,arg2,T1);
+        qtList.addQTInfo(qtInfo);
+        arg1 = T1;
+    }
+  )*
+  {
+    return T1;
+   }
+}
+
+String UnaryExpression() :
+{String s = null;}
+{
+(  "(" s = Expression() ")"
+ | s = Identifier()
+ | s = Integer()
+ )
+    {return s;}
+}
+
+String Identifier() :
+{ Token t = null;}
+{
+  t = < IDENTIFIER >
+  {
+    return t.image;
+  }
+}
+
+String Integer() :
+{Token t = null;}
+{
+  t = < INTEGER_LITERAL >
+  {
+    return t.image;
+    }
+
+}

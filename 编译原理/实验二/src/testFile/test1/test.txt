@@ -1,0 +1,7 @@
+void main()
+{
+	if(a>45){
+		int x,x1;
+		x = x1+1;
+	}
+}

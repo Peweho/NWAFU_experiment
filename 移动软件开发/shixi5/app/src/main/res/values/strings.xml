@@ -1,7 +1,0 @@
-<resources>
-    <string name="app_name">shixi5</string>
-    <string name="textViewSize">90dp</string>
-    <string name="clear">清零</string>
-    <string name="pause">暂停</string>
-    <string name="start">计时</string>
-</resources>

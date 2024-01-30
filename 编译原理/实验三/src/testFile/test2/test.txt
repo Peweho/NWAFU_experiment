@@ -1,0 +1,10 @@
+int main()
+{
+	if(a>45){
+		int x,x1;
+		x = x1+1;
+	} else {
+	    while (x == 0)
+	        b = 8;
+	}
+}

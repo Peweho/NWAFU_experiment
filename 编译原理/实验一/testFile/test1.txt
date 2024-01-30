@@ -1,0 +1,10 @@
+int main()
+{
+	int a,ans;
+	for(a=0;a<51;a++)
+	{
+		int t=1;
+		ans = ans + a;
+	}
+	return 0;
+}
