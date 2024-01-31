@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BookWebMapper">
+    <select id="selectBooks" parameterType="entity.SelectBook" resultType="entity.Books">
+        select * from books
+        <where>
+            <if test="bookName != null">
+                book_Name like #{bookName}
+            </if>
+            <if test="author != null">
+                and author like #{author}
+            </if>
+            <if test="press != null">
+                and press like #{press}
+            </if>
+            <if test="priceLower != null and priceLimit != null">
+                and price between #{priceLower} and #{priceLimit}
+            </if>
+            <if test="priceLower != null and priceLimit == null">
+                and price &gt; #{priceLower}
+            </if>
+            <if test="priceLower == null and priceLimit != null">
+                and price &lt; #{priceLower}
+            </if>
+            <if test="pressDateLower != null and pressDateLimit != null">
+                and press_date between #{pressDateLower} and #{pressDateLimit}
+            </if>
+            <if test="pressDateLower == null and pressDateLimit != null">
+                and press_date &lt; #{pressDateLimit}
+            </if>
+            <if test="pressDateLower != null and pressDateLimit == null">
+                and press_date &gt; #{pressDateLower}
+            </if>
+        </where>
+    </select>
+</mapper>

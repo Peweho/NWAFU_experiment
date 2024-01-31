@@ -1,0 +1,17 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BookMapper">
+    <insert id="insertBook" parameterType="entity.book">
+        insert into book(name,author,press,addTime) values(#{name},#{author},#{press},#{addTime})
+    </insert>
+    <update id="updatetBook" parameterType="entity.book">
+        update book
+        <set>
+            name = #{name},author = #{author}, press = #{press}
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+</mapper>

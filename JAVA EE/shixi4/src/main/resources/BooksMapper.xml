@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.BooksMapper">
+    <select id="getAllBooks" resultType="entity.Books">
+        select * from books
+    </select>
+    <select id="getBookById" parameterType="integer" resultType="entity.Books">
+        select * from books where id=#{id}
+    </select>
+
+    <delete id="deleteBookById" parameterType="integer" >
+        delete from books where id = #{id}
+    </delete>
+
+    <insert id="addBook" parameterType="entity.Books" >
+        insert into books(book_name,author,price,press)
+        values (#{bookName},
+                #{author},
+                #{price},
+                #{press});
+    </insert>
+    <update id="editBook" parameterType="entity.Books">
+        update books
+        set book_name = #{bookName},
+            author = #{author},
+            price = #{price},
+            press = #{press}
+        where id = #{id};
+    </update>
+</mapper>

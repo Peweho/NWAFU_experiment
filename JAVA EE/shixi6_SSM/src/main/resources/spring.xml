@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+    ">
+
+    <context:component-scan base-package="controller,entity,mapper,service" />
+    <!--加载属性文件-->
+    <context:property-placeholder location="classpath:param.properties" />
+
+    <!--数据库连接池-->
+    <bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--数据源（连接池）-->
+        <property name="dataSource" ref="datasource" />
+        <!--实体所在包-->
+        <property name="typeAliasesPackage" value="entity" />
+        <!--Mybatis的常量配置文件-->
+        <property name="configLocation" value="classpath:mybatis.xml" />
+        <!--Mapper配置文件-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />
+    </bean>
+
+    <!--Mybatis Mapper管理-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--会话工厂-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <!--映射接口文件所在包-->
+        <property name="basePackage" value="mapper" />
+    </bean>
+    <!--Spring MVC注解驱动-->
+    <mvc:annotation-driven />
+    <!--Spring MVC视图解析器-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="suffix" value=".jsp" />
+        <property name="prefix" value="/" />
+    </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/ctrl/*"/>
+            <bean class="Interceptor.Login" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+</beans>
