@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function isbian(str1,str2)
+			{
+				let n1 = str1.length
+				let n2 = str2.length
+				if(n1 !== n2)
+					return("false")
+					
+				let a1 = Array.from(str1)
+				let a2 = Array.from(str2)
+				let b = false
+				for (var i in a1)
+				{
+					for (var j in a2)
+					{
+						if(a1[i] == a2[j])
+						{
+							b = true
+							break;
+						}
+					}
+					
+					if(b) 
+						b =false
+					else 
+					{
+						return("false")
+					}
+				}
+				return("true")
+				
+			}
+			let str1 = prompt();
+			let str2 = prompt();
+			alert(isbian(str1,str2))
+			
+		</script>
+	</body>
+</html>

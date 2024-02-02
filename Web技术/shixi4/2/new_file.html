@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="./password.css">
+	</head>
+	<body>
+		<table border="1">
+			<tr>
+				<td class="introduce">所用字符</td>
+				<td colspan="3">
+					<input class="checkbox" type="checkbox">a-z
+					<input class="checkbox" type="checkbox">A-Z
+					<input class="checkbox" type="checkbox">0-9
+					<input class="checkbox" type="checkbox">
+					<input class="additional" type="text" value="!@#$%^&*()_-+=,./<>?:">
+				</td>
+			</tr>
+			<tr>
+				<td class="introduce">排除字符</td>
+				<td colspan="3">
+					<input class="elsechar" type="checkbox">
+					<input class="ban" type="text">
+				</td>
+			</tr>
+			<tr>
+				<td class="introduce">密码长度</td>
+				<td>
+					<select class="lenght" name="" id="">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+						<option value="15">15</option>
+						<option value="16">16</option>
+						<option value="17">17</option>
+					</select>位
+				</td>
+				<td class="introduce">密码数量</td>
+				<td>
+					<select class="count" id="">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+						<option value="13">13</option>
+						<option value="14">14</option>
+					</select>个
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<input class="button" type="button" value="生成密码">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<textarea class="textArea" name="" id="" cols="30" rows="10"></textarea>				
+				</td>
+			</tr>
+		</table>
+		<script src="password.js"></script>
+		<script src="button.js"></script>
+	</body>
+</html>

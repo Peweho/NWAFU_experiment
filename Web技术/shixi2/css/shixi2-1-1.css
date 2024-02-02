@@ -1,0 +1,41 @@
+#wrap{
+	width: 900px;
+	margin: 0 auto;
+	border: 2px solid red;
+	margin: 5px;
+}
+div {
+	text-align: center;
+}
+
+#pic{
+	width: 420px;
+	height: 300px;
+	ba
+	background: #77A url("../img/img2-0/ex9.jpg") no-repeat center center;
+	float: left;
+}
+
+#text{
+	background:#77A url("../img/img2-0/ex9.jpg");
+	float: right;
+	width: 420px;
+	height: 500px;
+	padding: 10px;
+	font-weight: bold;	
+}
+#title{
+	font:32px 华文彩云;
+}
+
+#author{
+	font: normal normal normal 12px 黑体;
+	margin-bottom: 24px;
+	text-align: right;
+}
+p {
+	font: normal normal normal 32px/1.5em 隶书;
+	margin: 2px;
+	text-align: center;
+	letter-spacing: 0.5em;
+}

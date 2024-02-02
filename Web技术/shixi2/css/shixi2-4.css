@@ -1,0 +1,97 @@
+h1
+{
+	color: #6EA933;
+	margin-bottom: 5px;
+}
+
+header p
+{
+	margin-top: 6px;
+	color: gray;
+}
+
+section p
+{
+	width: 240px;
+	height: 100px;
+	
+	
+}
+
+body
+{
+	padding: 20px 50px;
+	margin: 0 auto;
+}
+
+header
+{
+	margin: 80px 40px 20px;
+}
+
+.body
+{
+	float: left;
+	width: 55%;
+	height: 600px;
+}
+
+.img
+{
+	position: absolute;
+	right: 0%;
+	
+}
+
+ul
+{ 
+	float: left;
+	width: 100%;
+	height: 100%;
+	padding: 0 0;
+}
+
+li
+{
+	float: left;
+	list-style: none;
+	width: 50%;;
+	height: 50%;
+}
+
+li div
+{
+	box-sizing: border-box;
+	margin: 20px 20px;
+}
+
+h2
+{
+	color: white;
+	width: 100%;
+	
+	height: 50px;
+	background-color: #6EA933;
+	border-radius: 10px;
+	font: normal normal normal 25px/50px 黑体;
+	text-indent: 1em;
+}
+
+li  p
+{
+	font: normal normal normal 25px normal;
+	color: gray;
+}
+
+strong
+{
+	color: black;
+}
+
+.right
+{
+	float: right;
+	height: 1000px;
+	width: 20%;
+	background-color: #6EA933;
+}

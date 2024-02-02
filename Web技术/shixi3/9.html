@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<form name="frmLx1" method="get" onSubmit="return funCheck()">  
+		姓名：<input type="text" name="txtName" value="435"><br>  
+		<input type="submit" value="注册">  
+		</form>  
+		<script>  
+			function funCheck()
+			{  
+				//let content = document.getElementsByName("txtName").value
+				let content = document.querySelector("input").value
+				
+				if(content == '')
+				{
+					console.log("空")
+					alert("文本框不能为空")
+					return false
+				}	
+				else 
+				{
+					console.log("不空")
+					return true
+				}
+			}
+		</script>  
+	</body>
+</html>

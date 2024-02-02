@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../jquery-3.6.4.js"></script>
+	</head>
+	<body>
+		<table border="1"></table>
+		<script>
+			let url = "https://mock.apifox.cn/m1/1893392-0-default/cityweather"
+			let xhr = new XMLHttpRequest()
+			xhr.onreadystatechange = function()
+			{
+				if(xhr.status == 200 && xhr.readyState == 4)
+				{
+					let res = JSON.parse(xhr.responseText)
+					console.log(res)
+					if(res.data.forecast.length > 0)
+					{	
+						$('table').append(`<caption>天气预报</caption>`)
+						$('table').append(`<tr><td colspan="4">城市：${res.data.city.pname}${res.data.city.secondaryname
+}${res.data.city.name}</td></tr>`)
+						$('table').append(`<tr>
+												<th>预测日期</th>
+												<th>天气</th>
+												<th>最高气温</th>
+												<th>最低气温</th>
+											</tr>`)
+						for(let i of res.data.forecast)
+							$('table').append(`<tr>
+													<td>${i.predictDate}</td>
+													<td>${i.conditionDay}</th>
+													<td>${i.tempDay}&#8451;</td>
+													<td>${i.tempNight}&#8451;</td>
+												</tr>`)
+					}
+					
+				}
+			}
+			xhr.open('get',url,true)
+			xhr.send()
+		</script>
+	</body>
+</html>

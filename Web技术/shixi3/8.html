@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<input type="text" name="txtYear" id="txtYear">  
+		<input type="button" value="判断" onclick="testLeapYear()"> 
+		<script>  
+		function testLeapYear ()
+		{  
+			let year = parseInt(document.getElementById("txtYear").value)
+			return year%4===0 && year%100 !==0 || year%400 === 0 ? alert("是润年") : alert("不是润年")
+		} 
+		</script> 
+
+	</body>
+</html>

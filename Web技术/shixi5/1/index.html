@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../jquery-3.6.4.js"></script>
+	</head>
+	<body>
+		<div class="main">
+			<input type="text" id="city">
+			<button>查询</button><br>
+			<input type="text" id="time"><br>
+			<input type="text" id="temperature"><br>
+			<input type="text" id="humidity"><br>
+			<input type="text" id="weather"><br>
+			<input type="text" id="winddrection"><br>
+			<input type="text" id="windpower">
+		</div>
+		<script>
+			let url = "http://apihut.net/weather?city="
+			$('button').on('click',function(){
+				console.log("start")
+				let xhr = new XMLHttpRequest()
+				xhr.onreadystatechange = function()
+				{
+					if(xhr.status == 200 && xhr.readyState == 4)
+					{
+						let res = JSON.parse(xhr.responseText)
+						console.log(res)
+						if(res.data.length >0)
+								{
+									let obj = res.data[0]
+									$('#time').val(obj.reporttime)
+									$('#temperature').val(obj.temperature)
+									$('#humidity').val(obj.humidity)
+									$('#weather').val(obj.weather)
+									$('#winddrection').val(obj.winddirection)
+									$('#windpower').val(obj.windpower)
+								}
+								console.log(res)
+					}
+				}
+				xhr.open('get',url + $('#city').val(),true)
+				xhr.send()				
+			})
+		</script>
+	</body>
+</html>

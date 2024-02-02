@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function checkPalindrome(str)
+			{
+				let a = Array.from(str)
+				let len = str.length
+				let i=0
+				let j=len-1
+				for(;i<j;++i,--j)
+				{
+					if(a[i] !== a[j])
+						return("false")
+				}
+				return("true")
+			}
+			
+			let str = prompt()
+			alert(checkPalindrome(str))
+		</script>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			function compare(a,b){return a-b}
+			
+			let str = prompt().split(',')
+			let numarray = []
+			let sum = 0
+			
+			for(let i=0;i<str.length;++i)
+			{
+				numarray.push(parseInt(str[i]))
+				sum += numarray[i]
+			}
+			
+			numarray.sort(compare)
+			let max = numarray[0]
+			let min = numarray[numarray.length-1]
+			let s = new String()
+			
+			for(let i=0;i<numarray.length-1;++i)
+			{
+					s += numarray[i].toString()+","
+			}
+			s += numarray[numarray.length-1].toString()
+			alert(`最大值：${max}，最小值：${min}，和：${sum}`)
+			alert(`排序后：${s}`)
+			
+		</script>
+	</body>
+</html>

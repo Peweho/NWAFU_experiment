@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="./jQury/jquery-3.6.4.js"></script>
+		<style>
+			.img{
+				display: flex;
+				width: 800px;
+				height: 500px;
+				margin: 0 auto;
+				align-items: flex-end;
+				justify-content: center;
+				background-repeat: no-repeat;
+			}
+			.dianul{
+				display: flex;
+				
+			}
+			.dianul li{
+				margin: 0 15px;
+				font-size: 30px;
+			}
+			.li::marker{
+				color: white;
+			}
+		</style>
+		
+	</head>
+	<body>
+		<div class="img">
+			<ul class="dianul">
+			</ul>
+		</div>
+		<script>
+			function autoShowPicture()
+			{	
+				$('.dianul li').removeClass('li')
+				$('.dianul li').eq(index).addClass('li')
+				$('.img').css('backgroundImage',`url(${pic[index++].url})`)
+				index = index % pic.length
+			}
+			
+			const pic = [
+				{url:"./images/cup.jpg"},
+				{url:"./images/ex9.jpg"},
+				{url:"./images/lighthouseisland.jpg"},
+				{url:"./images/lighthouselogo.jpg"},
+				{url:"./images/list-image.png"},
+				{url:"./images/lotus-1.jpg"},
+				{url:"./images/lotus-3.jpg"},
+				{url:"./images/pearson.png"},
+				{url:"./images/tourist.png"},
+				{url:"./images/tsinghua.png"},]
+			
+			for(let i=0;i<pic.length;++i)
+				$('.dianul').append($('<li></li>'))
+				
+			index = 0
+			let clock = setInterval(autoShowPicture,1000)
+			$('.img')[0].addEventListener('mouseenter',function(){
+				clearInterval(clock)
+			})
+			$('.img')[0].addEventListener('mouseleave',function(){
+				clock = setInterval(autoShowPicture,1000)
+			})
+		</script>
+	</body>
+</html>

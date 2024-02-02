@@ -1,0 +1,18 @@
+@keyframes a1
+{
+    from {transform: rotate(0);}
+    to {transform: rotate(360deg);}
+}
+.t1
+{
+	width: 0px;
+	height: 0px;
+	border: 60px solid #000;
+	border-left-color: blue;
+	border-top-color: purple;
+	border-right-color: green;
+	border-bottom-color: red;
+	border-radius: 50%;
+	animation: a1 10s infinite;
+	animation-timing-function: linear;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>找出符合条件的数</title>
+	</head>
+	<body>
+		<script>
+			document.write(`<h3>找出1000 ~ 9999之间能够被17和13同时整除的整数、个数、累加和</h3>`)
+			let start = 1000;
+			let end = 9999;
+			let n=0;
+			let b=false
+			let sum=0
+			for(let i=start;i<=end;++i)
+			{
+				if(i % 17===0 && i % 13===0)
+				{
+					document.write(i + "  ")
+					sum += i
+					b=true
+					++n;
+				}
+				
+				if(b===true && n!== 0 && n % 10 === 0)
+				{
+					b=false
+					document.write(`<br>`)
+				}
+			}
+			
+			if(n % 10 === 0)
+				document.write(`<br>`)
+			document.write(n + " ")
+			if(n % 10 === 0)
+				document.write(`<br>`)
+				document.write(sum + " ")
+		</script>
+	</body>
+</html>
