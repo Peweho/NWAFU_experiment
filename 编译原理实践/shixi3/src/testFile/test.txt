@@ -1,0 +1,11 @@
+int main()
+{
+
+    int b;
+    break;
+    for(int a=1;a<10;a++){
+        b = b+1;
+        continue;
+        b=9;
+    }
+}
